@@ -45,6 +45,7 @@ void bfs(int N, int K, int X, vector<vector<int>> adj)
     queue<pair<int, int>> q;
 
     q.push(make_pair(0, X)); //거리 0 시작 X
+    visit[X] = true; //*추가함
 
     while(!q.empty())
     {
@@ -52,9 +53,9 @@ void bfs(int N, int K, int X, vector<vector<int>> adj)
         int current = q.front().second;
         q.pop();
 
-        if(visit[current]) continue;
+        //if(visit[current]) continue; //*지움
 
-        visit[current] = true;
+        //visit[current] = true; //*지움
 
         if(distance == K)
         {
@@ -65,9 +66,10 @@ void bfs(int N, int K, int X, vector<vector<int>> adj)
         for(int i=0; i< int(adj[current].size()); ++i)
         {
             int next = adj[current][i];
-            if(visit[next]) continue;
 
-            q.push(make_pair((distance + 1), next)); // 인접한 ㅗ드를 
+            if(visit[next]) continue;
+            visit[next] = true; //*push 할때 방문처리 해줘도 되나..??
+            q.push(make_pair((distance + 1), next)); // 인접한 노드 넣어주기
         }
     }
 
