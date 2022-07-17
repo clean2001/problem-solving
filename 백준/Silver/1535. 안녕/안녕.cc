@@ -1,44 +1,49 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-int L[21], J[21]; //0번째 인덱스 안씀..???
-int dp[21][101];
+int L[21];
+int J[21];
+int dpa[21][101];
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
+int DP(int N) {
+    int ans = 0;
+
+    for(int i=0; i<21; ++i) 
+        fill(dpa[i], dpa[i]+101, 0);
     
-    int N; //사람 수
-    //int HP = 99, delight = 0; //초기 체력 ,기쁨
-    int rslt = 0;
-
-    cin >> N;
-
-    for(int i=1 ;i<=N; ++i)
-        cin >> L[i]; //잃는 체력 입력
-    
-    for(int i=1; i<=N; ++i)
-        cin >> J[i]; //얻는 기쁨 입력
-
-    
-    for(int k=1; k<=N; ++k)
-    {
-        for(int h=100; h>0; --h)
-        {
-            if(h - L[k] > 0 ) //인사 할 수 있음
-                dp[k][h] = max(dp[k-1][h], dp[k-1][h-L[k]] + J[k]);
-            else //인사 할 수 없음
-                dp[k][h] = dp[k-1][h];
-
-            //rslt = max(dp[k][h], rslt);
-
+    for(int i=1; i<=N; ++i) {
+        for(int d=0; d<100; ++d) {
+            //if(d-L[i] < 0) continue;
+            if(d-L[i] >= 0)
+                dpa[i][d] = max(dpa[i-1][d], dpa[i-1][d-L[i]] + J[i]);
+            else
+                dpa[i][d] = dpa[i-1][d];
+            
+            if(ans < dpa[i][d]) ans = dpa[i][d];
         }
     }
 
-    cout << dp[N][100] << "\n";
+    return ans;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+
+    for(int i=1; i<=N; ++i) {
+        cin >> L[i];
+    }
+    for(int i=1; i<=N; ++i) {
+        cin >> J[i];
+    }
+
+    int ans = DP(N);
+    cout << ans << '\n';
 
     return 0;
-
 }
