@@ -13,23 +13,17 @@ int dist[501];
 bool bf(int start) {
 	dist[start] = 0;
 
-	for(int k=1; k<=(N-1); ++k) {
+	for(int k=0; k<N; ++k) {
 		for(int i=1; i<=N; ++i) {
 			for(pair<int, int> ed : edges[i]) {
 				if(dist[ed.first] > dist[i] + ed.second) {
 					dist[ed.first] = dist[i] + ed.second;
+
+					if(k == N-1) return true;
 				}
 			}
 		}
 	}
-
-	for(int i = 1; i <= N; ++i) {
-        for(pair<int, int> ed : edges[i]) {
-            if(dist[ed.first] > dist[i] + ed.second) {
-                return true;
-            }
-        }
-    }
 
 	return false;
 
