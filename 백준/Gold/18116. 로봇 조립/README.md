@@ -33,7 +33,7 @@
 
 <p>다음 줄부터 <em>N</em>개의 지시가 들어온다.</p>
 
-<p>부품 2개가 같은 로봇의 부품인지 알려줄 때에는 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D43C TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">\(I\)</span> </mjx-container><em> a b</em> 의 형태로 들어온다. 부품 <em>a</em>와 부품 <em>b</em>는 같은 로봇의 부품이라는 의미이다. (1 ≤<strong> </strong><em>a</em>, <em>b</em> ≤ 10<sup>6</sup>, <em>a</em> ≠ <em>b, a</em>, <em>b</em>는 정수)</p>
+<p>부품 2개가 같은 로봇의 부품인지 알려줄 때에는 \(I\)<em> a b</em> 의 형태로 들어온다. 부품 <em>a</em>와 부품 <em>b</em>는 같은 로봇의 부품이라는 의미이다. (1 ≤<strong> </strong><em>a</em>, <em>b</em> ≤ 10<sup>6</sup>, <em>a</em> ≠ <em>b, a</em>, <em>b</em>는 정수)</p>
 
 <p>어떤 로봇의 부품이 몇 개인지 물어볼 때에는 <em>Q c</em> 의 형태로 들어온다. 지금까지 알아낸 robot(<em>c</em>)의 부품이 몇 개냐는 의미이다. (1 ≤ <em>c</em> ≤ 10<sup>6</sup>, <em>c</em>는 정수)</p>
 
