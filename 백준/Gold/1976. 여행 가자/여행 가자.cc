@@ -1,70 +1,58 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-//int adj[201][201];
 int parent[201];
-int city[1001];
 
-int Find(int node) {
-    if(parent[node] == node)
-        return node;
-    else
-        return parent[node] = Find(parent[node]);
+int find(int a) {
+    if(parent[a] == a) return a;
+    
+    return (parent[a] = find(parent[a]));
+
 }
 
-void Union(int a, int b) {
-    int r1 = Find(a);
-    int r2 = Find(b);
+void uni(int a, int b) {
+    int ra = find(a);
+    int rb = find(b);
 
-    r2[parent] = r1;
+    if(ra == rb) return; 
+
+    parent[rb] = ra;
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
     int N, M;
-
     cin >> N >> M;
 
     for(int i=1; i<=N; ++i) {
         parent[i] = i;
     }
 
-    for(int i=1; i<=N; ++i)
-    {
+    for(int i=1; i<=N; ++i) {
         for(int j=1; j<=N; ++j) {
             int k;
             cin >> k;
-
-            if(k == 1)
-                Union(i, j);
+            
+            if(k) uni(i, j);
         }
     }
 
-    for(int i=1; i<=M; ++i)
-    {
-        int a;
-        cin >> a;
-        city[i] = a;
+    int city;
+    cin >> city;
+    int root = find(city);
+    bool is_ok = true;
+    for(int i=1; i<M; ++i) {
+        cin >> city;
+        int r2 = find(city);
+
+        if(root != r2) is_ok = false;
     }
 
-    bool flag = true;
-    for(int i=1; i<M; ++i)
-    {
-        if(Find(city[i]) != Find(city[i+1])) {
-            flag = false;
-            break;
-        }
-    }
-
-    if(flag)
-        cout << "YES\n";
-    else
-        cout << "NO\n";
-
+    if(!is_ok) cout << "NO\n";
+    else cout << "YES\n";
     return 0;
-    
 }
