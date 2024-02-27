@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+commit_msg_regex='\[[A-Z]+\] [BP]+\d'
+error_msg="[Invalid Commit Msg] rule example: [ALGORITHM] B1234"
+commit_msg=$(cat "$1")
+
+if ! echo "$commit_msg" | grep -Eq "$commit_msg_regex"; then
+    echo "$error_msg" >&2
+    exit 1
+fi
