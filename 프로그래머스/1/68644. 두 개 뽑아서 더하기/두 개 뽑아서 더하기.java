@@ -1,18 +1,21 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(int[] numbers) {
-        List<Integer> list = new ArrayList<>();
-        
+        Set<Integer> set = new TreeSet<>();
         for(int i=0; i<numbers.length; ++i) {
             for(int j=i+1; j<numbers.length; ++j) {
-                int sum = numbers[i] + numbers[j];
-                if(!list.contains(sum)) {
-                    list.add(sum);
-                }
+                set.add(numbers[i] + numbers[j]);
             }
         }
         
-        return list.stream().sorted().mapToInt(a->a).toArray();
+//         int[] ans = new int[set.size()];
+        
+//         int idx = 0;
+//         for(int n : set.entrySet()) {
+//             ans[idx++] = n;
+//         }
+        
+        
+        return set.stream().mapToInt(a -> a).toArray();
     }
 }
