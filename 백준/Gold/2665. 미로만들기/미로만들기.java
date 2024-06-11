@@ -2,82 +2,56 @@ import java.io.*;
 import java.util.*;
 
 class Main {
-  static int N, K;
-  static int[][] map;
-  static int[][] dp;
+  static int N;
+  static int[][] arr;
   static int[] dy = {1, -1, 0, 0};
-  static int[] dx = {0, 0, -1, 1};
-  static class Node implements Comparable<Node> {
-    int y, x, c;
-    Node(int y, int x, int c) {
-      this.y = y;
-      this.x = x;
-      this.c = c;
-    }
-
-    @Override
-    public int compareTo(Node n) {
-      return this.c - n.c;
-    }
-  }
-
+  static int[] dx = {0, 0, 1, -1};
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     N = Integer.parseInt(br.readLine());
-//    K = N * N;
-    map = new int[N][N];
-    dp = new int[N][N];
-
+    arr = new int[N][N];
     for(int i=0; i<N; ++i) {
-      String[] line = br.readLine().split("");
+      String line = br.readLine();
       for(int j=0; j<N; ++j) {
-        map[i][j] = Integer.parseInt(line[j]);
-      }
-    }
-
-
-
-    for(int i=0; i<N; ++i) {
-      for(int j=0; j<N; ++j) {
-        dp[i][j] = Integer.MAX_VALUE;
+        arr[i][j] = line.charAt(j) - '0';
       }
     }
 
     System.out.println(bfs());
-    
   }
+
   private static int bfs() {
-    PriorityQueue<Node> q = new PriorityQueue<>();
-    q.add(new Node(0, 0, 0));
-    dp[0][0] = 0;
-    int ans = Integer.MAX_VALUE;
+    Deque<int[]> dq = new LinkedList<>();
+    boolean[][] vis = new boolean[N][N];
+    dq.addFirst(new int[] {0, 0, 0}); // y, x, 흰색으로 바꾼 개수
+    vis[0][0] = true;
 
-    while(!q.isEmpty()) {
-      Node cur = q.poll();
+    while(!dq.isEmpty()) {
+      int[] cur = dq.pollFirst();
+      int y = cur[0];
+      int x = cur[1];
+      int c = cur[2];
 
-      if(cur.y == N-1 && cur.x == N-1) {
-        ans = Math.min(cur.c, ans);
-      }
+      if(y == N-1 && x == N-1) return c;
 
       for(int i=0; i<4; ++i) {
-        int ny = cur.y + dy[i];
-        int nx = cur.x + dx[i];
-        if(ny < 0 || nx < 0 || nx >= N || ny >= N) continue;
+        int ny = y + dy[i];
+        int nx = x + dx[i];
 
-        if(map[ny][nx] == 0) { // 검은색
-          if(dp[ny][nx] > cur.c + 1) {
-            dp[ny][nx] = cur.c + 1;
-            q.add(new Node(ny, nx, cur.c + 1));
-          }
+        if(ny < 0 || nx < 0 || ny >= N || nx >= N) continue;
+        if(vis[ny][nx]) continue;
+
+        vis[ny][nx] = true;
+
+        if(arr[ny][nx] == 0) { // 검은색
+          dq.addLast(new int[] {ny, nx, c+1});
         } else { // 흰색
-          if(dp[ny][nx] > cur.c) {
-            dp[ny][nx] = cur.c;
-            q.add(new Node(ny, nx, cur.c));
-          }
+          dq.addFirst(new int[] {ny, nx, c});
         }
       }
     }
-    return ans;
+
+    return -1;
   }
 }
