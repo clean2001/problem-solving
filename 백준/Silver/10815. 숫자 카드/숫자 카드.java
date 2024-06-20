@@ -6,6 +6,7 @@ class Main {
   static Set<Integer> set = new HashSet<>();
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     N = Integer.parseInt(br.readLine());
     StringTokenizer st = new StringTokenizer(br.readLine());
     for(int i=0; i<N; ++i) {
@@ -18,12 +19,12 @@ class Main {
     for(int i=0; i<M; ++i) {
       int n = Integer.parseInt(st.nextToken());
       if (set.contains(n)) {
-        System.out.print("1 ");
+        bw.write("1 ");
       } else {
-        System.out.print("0 ");
+        bw.write("0 ");
       }
     }
 
-
+    bw.flush();
   }
 }
