@@ -1,23 +1,32 @@
 import java.util.*;
 class Solution {
     public int solution(int[] people, int limit) {
+        int answer = 0;
+        
+        int left = 0, right = people.length - 1;
+        
+        // 정렬하기
         Arrays.sort(people);
-        int len = people.length;
-        int left = 0, right = len - 1;
-        int cnt = 0;
+        
         while(left <= right) {
-            int lw = people[left], rw = people[right];
+            if(left == right) {
+                answer++;
+                break;
+            }
             
-            if(left == right) rw = 0;
-            if(lw + rw <= limit) {
-                left++; right--;
-                cnt++;
-            } else {
+            int w1 = people[left];
+            int w2 = people[right];
+            
+            if(w1 + w2 > limit) {
+                answer++;
                 right--;
-                cnt++;
+            } else {
+                answer++;
+                right--;
+                left++;
             }
         }
         
-        return cnt;
+        return answer;
     }
 }
