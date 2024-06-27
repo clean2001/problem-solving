@@ -2,14 +2,17 @@ class Solution {
     public int solution(int n) {
         int start = 1, end = 1;
         int ans = 0;
+        int sum = end - start + 1;
         while(start <= end && end <= n) {
-            int sum = makeSum(end) - makeSum(start-1);
             if(sum == n) {
                 ans++;
+                sum -= start;
                 start++;
             } else if(sum < n) {
                 end++;
+                sum += end;
             } else {
+                sum -= start;
                 start++;
             }
         }
