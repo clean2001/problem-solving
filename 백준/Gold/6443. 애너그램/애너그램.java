@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.*;
 public class Main {
-  // 아이디어: 스택에 들어있는 수가 증가되도록 저장.
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,7 +16,6 @@ public class Main {
       for(int i=0; i<input.length(); ++i) { // 개수 세기
         cnt[input.charAt(i) - 'a']++;
       }
-//      Arrays.sort(ch);
 
       dfs(0, new char[ch.length], cnt);
     }
@@ -28,7 +26,7 @@ public class Main {
   private static void dfs(int depth, char[] result, int[] cnt) throws Exception {
     if(depth == result.length) {
       for(int i=0; i<result.length; ++i) {
-        bw.write(result[i]+"");
+        bw.write(result[i]);
       }
 
       bw.write("\n");
