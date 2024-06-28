@@ -10,7 +10,7 @@ class Main {
       int n, m;
       StringTokenizer st = new StringTokenizer(br.readLine());
       n = Integer.parseInt(st.nextToken());
-      m = (int)(Double.parseDouble(st.nextToken()) * 100.0 + 0.5);
+      m = (int)Math.round((Double.parseDouble(st.nextToken()) * 100.0));
 
       if(n == 0) break; // 종료
 
@@ -21,7 +21,7 @@ class Main {
       for(int i=1; i<=n; ++i) {
         st = new StringTokenizer(br.readLine());
         int a = Integer.parseInt(st.nextToken());
-        int b = (int)(Double.parseDouble(st.nextToken()) * 100.0 + 0.5);
+        int b = (int)Math.round((Double.parseDouble(st.nextToken()) * 100.0));
         list.add(new int[] {a, b});
       }
       list.sort((a, b) -> a[1] - b[1]);
