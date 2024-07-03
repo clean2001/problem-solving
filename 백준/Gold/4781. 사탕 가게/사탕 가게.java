@@ -24,12 +24,11 @@ class Main {
         int b = (int)Math.round((Double.parseDouble(st.nextToken()) * 100.0));
         list.add(new int[] {a, b});
       }
-      list.sort((a, b) -> a[1] - b[1]);
 
       for(int i=1; i<=n; ++i) {
         for(int j=0; j<=m; ++j) {
           if(j - list.get(i)[1] >= 0) {
-            dp[i][j] = Math.max(dp[i-1][j-list.get(i)[1]] + list.get(i)[0], Math.max(dp[i][j-list.get(i)[1]] + list.get(i)[0], dp[i-1][j]));
+            dp[i][j] = Math.max(dp[i][j-list.get(i)[1]] + list.get(i)[0], dp[i-1][j]);
           } else {
             dp[i][j] = dp[i-1][j];
           }
