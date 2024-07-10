@@ -67,7 +67,7 @@ class Main {
             total += temp.get(i)[0];
         }
 
-        if(total < 0) return false; // overflow
+//        if(total < 0) return false; // overflow
 
         if(total <= G) return true;
         return false;
