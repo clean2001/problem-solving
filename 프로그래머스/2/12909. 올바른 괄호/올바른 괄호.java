@@ -1,22 +1,21 @@
 import java.util.*;
-  class Solution {
-    boolean solution(String s) {
-      Stack<Character> st = new Stack<>();
-      boolean ans = true;
-      for(int i = 0; i<s.length(); ++i) {
-         char c = s.charAt(i);
-        if(c == '(') {
-          st.push(c);
-        } else {
-          if(!st.isEmpty() && st.peek() == '(') {
-            st.pop();
-          } else {
-            st.push(c);
-          }
-        }
-      }
 
-      if(!st.isEmpty()) ans = false;
-      return ans;
+class Solution {
+    boolean solution(String s) {
+        Deque<Character> dq = new LinkedList<>();
+        
+        for(int i=0; i< s.length(); ++i) {
+            char c = s.charAt(i);
+            if(!dq.isEmpty() && c == ')' && dq.peekFirst() == '(') {
+                dq.pollFirst();
+            } else if(c == '(') {
+                dq.addFirst(c);
+            } else {
+                return false;
+            }
+        }
+        
+        if(dq.isEmpty()) return true;
+        return false;
     }
-  }
+}
