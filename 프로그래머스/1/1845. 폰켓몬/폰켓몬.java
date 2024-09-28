@@ -1,11 +1,12 @@
 import java.util.*;
+
 class Solution {
     public int solution(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        for(int p : nums) {
-            set.add(p);
+        Set<Integer> pokemon = new HashSet<>();
+        for(int a : nums) {
+            pokemon.add(a);
         }
         
-        return Math.min(nums.length/2, set.size());
+        return Math.min(pokemon.size(), nums.length/2);
     }
 }
