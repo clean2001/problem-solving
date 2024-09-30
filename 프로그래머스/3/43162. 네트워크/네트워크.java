@@ -1,49 +1,46 @@
 import java.util.*;
 
 class Solution {
-    static List<List<Integer>> adj;
-    static boolean[] vis;
-    static int ans = 0;
+    public static List<List<Integer>> adj = new ArrayList<>();
+    public static boolean[] vis;
     public int solution(int n, int[][] computers) {
-        adj = new ArrayList<>();
+        vis = new boolean[n];
         for(int i=0; i<n; ++i) {
             adj.add(new ArrayList<>());
         }
-        vis = new boolean[n];
         
-        // 인접 리스트에 추가
         for(int i=0; i<n; ++i) {
-            for(int j=i+1; j<n; ++j) {
-                if(computers[i][j] == 1) {
+            for(int j=0; j<n; ++j) {
+                if(computers[i][j] == 1)
                     adj.get(i).add(j);
-                    adj.get(j).add(i);
-                }
             }
         }
         
+        int cnt = 0;
         for(int i=0; i<n; ++i) {
-            if(vis[i]) continue;  
-            ans++;
+            if(vis[i]) continue;
             bfs(i);
+            cnt++;
+            // System.out.println("!!");
         }
         
-        return ans;
+        
+        return cnt;
     }
     
-    private static void bfs(int start) {
+    public static void bfs(int s) {
+        vis[s] = true;
         Queue<Integer> q = new LinkedList<>();
-        q.add(start);
-        vis[start] = true;
+        q.add(s);
         while(!q.isEmpty()) {
-            int cur = q.poll();
             
-            // 인접 리스트 돌기
+            int cur = q.poll();
+            // System.out.println(cur);
             List<Integer> nexts = adj.get(cur);
-            for(int next : nexts) {
-                if(vis[next]) continue;
-                
-                vis[next] = true;
-                q.add(next);
+            for(int n : nexts) {
+                if(vis[n]) continue;
+                vis[n] = true;
+                q.add(n);
             }
         }
     }
