@@ -2,41 +2,44 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] jobs) {
-        // 처리시간이 짧은 순
-        PriorityQueue<int[]> pq  = new PriorityQueue<>((a, b) -> {
-            return a[1] - b[1];
-        });
-        
-        // 들어오는 순서대로 정렬 해주기
+        // 1. 요청이 들어온 시간을 기준으로 정렬 (요청 들어온 시간이 같다면 처리가 더 짧은 것)
         Arrays.sort(jobs, (a, b) -> {
+            if(a[0] == b[0]) {
+                return a[1] - b[1]; 
+            }
+            
             return a[0] - b[0];
         });
         
-        int pointer = 0; // 몇번째를 큐에 넣을 차례인지
-        int done = 0;
-        int time = 0; // 시간
-        int total = 0; // 시간 합계
-        while(done < jobs.length) {
-            
-            // 일을 모두 넣기
-            while(pointer < jobs.length && time >= jobs[pointer][0]) {
-
-                pq.add(new int[]{jobs[pointer][0], jobs[pointer][1]});
-                pointer++;
-            }
-            if(!pq.isEmpty()) { // 할일 있음
-                int[] cur = pq.poll();
-                time += cur[1];
-                total += (time - cur[0]);
-                done++;
-            } else if(pointer < jobs.length && pq.isEmpty()) { // 큐가 비어있음
-                    time = jobs[pointer][0];
+        // 2. pq를 선언(짧은거 우선 정렬)하고, 시작시간 세팅
+        int cur = 0; // 현재 시간
+        int total = 0; // 누적 처리 시간
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
+            return  a[1] - b[1];
+        });
+        int idx = 0;
+        int cnt = 0;
+        while(cnt < jobs.length) {
+            if(pq.isEmpty()) {
+                if(idx < jobs.length) {
+                    cur += (jobs[idx][0] - cur); // 시간 맞추기
+                    pq.add(jobs[idx]);
+                    idx++;
+                }
+            } else { // 큐가 안비어져있음
+                cnt++;
+                int[] job = pq.poll();
+                cur += job[1];
+                total = total + cur + - job[0];
+                
+                // 큐에 일 모두 넣기
+                while(idx < jobs.length && jobs[idx][0] <= cur) {
+                    pq.add(jobs[idx++]);
                 }
             }
+        }
         
-        return (int)((double)total / jobs.length);
-            
-            
+        return total / jobs.length;
+
     }
-        
 }
