@@ -1,25 +1,33 @@
 import java.util.*;
+
 class Solution {
-    private static int[][] dun;
-    private static int ans = 0;
+    public static int ans = 0;
     public int solution(int k, int[][] dungeons) {
-        dun = dungeons;
-        
-        dfs(k, 0, new boolean[dungeons.length]);
-        
+        perm(new ArrayList<int[]>(), k,dungeons, new boolean[dungeons.length]);
         return ans;
     }
     
-    // permutation
-    private static void dfs(int remain, int cnt, boolean[] vis) {
-        ans = Math.max(cnt, ans);
-        
-        for(int i=0; i<dun.length; ++i) {
-            if(vis[i]) continue;
-            if(remain < dun[i][0] || remain < dun[i][1]) continue;
+    public void perm(ArrayList<int[]> list, int k, int[][] dungeons, boolean[] vis) {
+        if(list.size() == dungeons.length) {
+            // 돌면서 체크
+            int cnt = 0;
+            for(int[] a : list) {
+                if(k >= a[0]) {
+                    k -= a[1];
+                    cnt++;
+                }
+            }
             
+            ans = Math.max(ans, cnt);
+            return;
+        }
+        
+        for(int i=0; i<vis.length; ++i) {
+            if(vis[i]) continue;
             vis[i] = true;
-            dfs(remain - dun[i][1], cnt+1, vis);
+            list.add(dungeons[i]);
+            perm(list, k, dungeons, vis);
+            list.remove(list.size() - 1);
             vis[i] = false;
         }
     }
