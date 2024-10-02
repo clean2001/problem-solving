@@ -1,25 +1,19 @@
 class Solution {
     public int solution(int n) {
-        int start = 1, end = 1;
+        int left = 1; int right = 1;
+        int cur = 1;
         int ans = 0;
-        int sum = end - start + 1;
-        while(start <= end && end <= n) {
-            if(sum == n) {
-                ans++;
-                sum -= start;
-                start++;
-            } else if(sum < n) {
-                end++;
-                sum += end;
+        while(left <= n) {
+            if(cur < n) { // 더 많이 더해야함
+                cur += ++right;
+            } else if(cur > n) { // 빼야함
+                cur -= left++;
             } else {
-                sum -= start;
-                start++;
+                ans++;
+                cur -= left++;
             }
         }
+        
         return ans;
-    }
-    
-    private static int makeSum(int n) {
-        return n * (n+1) / 2;
     }
 }
