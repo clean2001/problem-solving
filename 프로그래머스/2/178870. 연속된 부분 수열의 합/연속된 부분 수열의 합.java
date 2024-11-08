@@ -1,24 +1,30 @@
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        int left = 0, right = 0; // 시작 인덱스, 끝 인덱스
-        int cur = sequence[0]; // 현재까지의 부분합
-        int[] ans = new int[] {0, sequence.length};
-        while(left < sequence.length) {
-            if(cur < k && right + 1 < sequence.length) {
-                cur += sequence[++right];
-            } else if(cur == k) {
-                int len1 = ans[1] - ans[0];
-                int len2 = right - left;
+        int left = 0, right = 0;
+        int sum = sequence[0];
+        int ansL = 0, ansR = sequence.length;
+        while(left <= right && left < sequence.length) {
+            
+            if(sum == k) {
+                // System.out.println(left + " " + right + " " + sum);
+                if(right - left < ansR - ansL) {
+                    ansR = right;
+                    ansL = left;
+                } 
                 
-                if(len1 > len2) {
-                    ans[0] = left;
-                    ans[1] = right;
-                }
-                cur -= sequence[left++];
+                sum -= sequence[left++];
+            } else if(sum < k) {
+                if(right+1 >= sequence.length) break;
+                sum += sequence[++right];
             } else {
-                cur -= sequence[left++];
+                sum -= sequence[left++];
             }
         }
+        
+        int[] ans = new int[2];
+        int idx = 0;
+        ans[0] = ansL;
+        ans[1] = ansR;
         
         return ans;
     }
