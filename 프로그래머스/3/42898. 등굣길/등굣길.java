@@ -1,27 +1,26 @@
 class Solution {
-    static int D = 1_000_000_007;
     public int solution(int m, int n, int[][] puddles) {
-        long[][] map = new long[n][m];
-        boolean[][] p = new boolean[n][m];
-        // 웅덩이 표시하기
-        for(int[] pd : puddles) {
-            p[pd[1]-1][pd[0]-1] = true;
+        int[][] dist = new int[m+1][n+1];
+        dist[1][1] = 1;
+        
+        for(int i=0; i<puddles.length; ++i) {
+            dist[puddles[i][0]][puddles[i][1]] = -1;
         }
-        for(int i=0; i<n; ++i) {
-            for(int j=0; j<m; ++j) {
-                if(p[i][j]) continue;
+        for(int i=1; i<=m; ++i) {
+            for(int j=1; j<=n; ++j) {
+                if(dist[i][j] == -1) continue;
                 
-                if(i==0 && j == 0) {
-                    map[i][j] = 1L;
-                } else if(i == 0) {
-                    map[i][j] = map[i][j-1];
-                } else if(j == 0) {
-                    map[i][j] = map[i-1][j];
-                } else {
-                    map[i][j] = (map[i-1][j] % D + map[i][j-1] % D) % D;
+                if(dist[i-1][j] != -1) {
+                    dist[i][j] = (dist[i][j] + dist[i-1][j]) % 1000000007;
                 }
+                
+                if(dist[i][j-1] != -1) {
+                    dist[i][j] = (dist[i][j] + dist[i][j-1]) % 1000000007;
+                }
+
             }
         }
-        return (int)(map[n-1][m-1] % D);
+        
+        return (dist[m][n]) % 1000000007;
     }
 }
