@@ -1,44 +1,36 @@
 import java.util.*;
 
 class Solution {
-    public static List<List<Integer>> adj;
+    List<List<Integer>> adj;
     public int solution(int n, int[][] edge) {
+        Queue<Integer> q = new LinkedList<>();
+        int[] dist = new int[n+1];
         adj = new ArrayList<>();
         for(int i=0; i<=n; ++i) {
             adj.add(new ArrayList<>());
         }
         
-        for(int[] e : edge) {
-            adj.get(e[0]).add(e[1]);
-            adj.get(e[1]).add(e[0]);
+        for(int i=0; i<edge.length; ++i) {
+            adj.get(edge[i][0]).add(edge[i][1]);
+            adj.get(edge[i][1]).add(edge[i][0]);
         }
         
-        return bfs(n);
-        
-    }
-    
-    public static int bfs(int n) {
-        int ans = 0;
-        int maxDist = 0;
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{1, 0}); // 노드, dist
-        
-        boolean[] vis = new boolean[n+1];
-        vis[1] = true;
+        q.add(1);
+        dist[1] = 1;
+        int maxDist = 1;
+        int ans = 1;
         while(!q.isEmpty()) {
-            int[] cur = q.poll();
-            List<Integer> nexts = adj.get(cur[0]);
+            int cur = q.poll();
+            
+            List<Integer> nexts = adj.get(cur);
             for(int next : nexts) {
-                if(vis[next]) continue;
+                if(dist[next] != 0) continue;
+                dist[next] = dist[cur] + 1;
+                q.add(next);
                 
-                int dist = cur[1] + 1;
-                vis[next] = true;
-                q.add(new int[]{next, dist});
-                
-                if(dist == maxDist) {
-                    ans++;
-                } else if(dist > maxDist) {
-                    maxDist = dist;
+                if(maxDist == dist[next]) ans++;
+                else {
+                    maxDist = dist[next];
                     ans = 1;
                 }
             }
