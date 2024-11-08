@@ -1,24 +1,23 @@
 class Solution {
-    public static int[][] dp;
     public int solution(int[][] triangle) {
-        dp = new int[triangle.length][triangle.length];
-        
-        dp[0][0] = triangle[0][0];
-        for(int i=1; i<dp.length; ++i) {
-            dp[i][0] = dp[i-1][0] + triangle[i][0];
-            for(int j=1; j<i; ++j) {
-                dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-1]) + triangle[i][j];
+        for(int i=1; i<triangle.length; ++i) {
+            for(int j=0; j<triangle[i].length; ++j) {
+                if(j - 1 < 0) {
+                    triangle[i][j] += triangle[i-1][j];
+                } else if(j >= triangle[i-1].length) {
+                    triangle[i][j] += triangle[i-1][j-1];
+                } else {
+                    triangle[i][j] += Math.max(triangle[i-1][j-1], triangle[i-1][j]);
+                }
             }
-            dp[i][i] = dp[i-1][i-1] + triangle[i][i];
         }
         
-
         int ans = -1;
-        for(int i=0; i<dp.length; ++i) {
-            ans = Math.max(ans, dp[dp.length-1][i]);
+        for(int i=0; i<triangle.length; ++i) {
+            // System.out.println(triangle[triangle.length-1][i]);
+            ans = Math.max(ans, triangle[triangle.length-1][i]);
         }
         
         return ans;
-        
     }
 }
