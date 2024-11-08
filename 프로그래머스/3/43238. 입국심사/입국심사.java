@@ -1,30 +1,28 @@
 class Solution {
     public long solution(int n, int[] times) {
-        long left = 0;
-        long right = (long)1e18 + 1L;
+        long left = 0L, right = 1000000000L*100000L + 1L;
         long ans = right;
         while(left <= right) {
-            long mid = (left + right) / 2; // mid분 안에 끝날 수 있는가
+            long mid = (left + right) / 2;
             
-            boolean can = validate(n, times, mid);
-            if(can) {
-                right = mid - 1;
-                ans = mid;
+            if(can(mid, n, times)) {
+                right = mid-1;
+                ans = Math.min(mid, ans);
             } else {
-                left = mid + 1;
+                left = mid+1;
             }
         }
         
         return ans;
     }
     
-    public static boolean validate(int n, int[] times, long mid) {
-        long cnt = 0;
+    private static boolean can(long mid, int n, int[] times) {
+        long total = 0;
         for(int t : times) {
-            cnt += mid / t;
+            total += (mid / (long)t);
         }
         
-        if(cnt >= (long)n) return true;
+        if((long)n <= total) return true;
         return false;
     }
 }
