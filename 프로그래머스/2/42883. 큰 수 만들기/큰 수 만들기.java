@@ -1,21 +1,23 @@
+import java.util.*;
+
 class Solution {
     public String solution(String number, int k) {
-        int line = k;
-        int left = 0;
         StringBuilder sb = new StringBuilder();
-        while(line < number.length()) {
-            // 최대값 구하기
-            int maxVal = -1, idx = -1;
-            for(int i=left; i<=line; ++i) {
+        int start = 0;
+        int end = k;
+        
+        while(end < number.length()) {
+            int maxVal = number.charAt(start) - '0';
+            int maxIdx = start;
+            for(int i=start+1; i<=end; ++i) {
                 if(maxVal < number.charAt(i) - '0') {
                     maxVal = number.charAt(i) - '0';
-                    idx = i;
+                    maxIdx = i;
                 }
             }
-            
-            left = idx+1;
-            line++;
-            sb.append(Integer.toString(maxVal));
+            sb.append(maxVal);
+            start = maxIdx+1;
+            end++;
         }
         
         return sb.toString();
