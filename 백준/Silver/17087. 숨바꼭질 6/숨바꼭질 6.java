@@ -7,6 +7,7 @@ import java.util.*;
 class Main{
   private static int gcb(int a, int b) {
     if(b == 0) return a;
+    if(a == 1) return 1;
 
     return gcb(b, a % b);
   }
