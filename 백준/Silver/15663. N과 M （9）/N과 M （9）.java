@@ -33,7 +33,6 @@ public class Main {
     }
 
     Collections.sort(list);
-    set = new HashSet<>();
 
     dfs(new LinkedList<>());
 
@@ -49,19 +48,16 @@ public class Main {
         sb.append(val + " ");
       }
 
-      if(set.contains(sb.toString())) {
-        return;
-      } else {
-        bw.write(sb.toString() + "\n");
-        set.add(sb.toString());
-        return;
-      }
-
+      bw.write(sb.toString() + "\n");
+      return;
     }
 
+    int before = -1;
     for(int i=0; i<N; ++i) {
       if(vis[i]) continue;
+      if(before == list.get(i)) continue;
 
+      before = list.get(i);
       vis[i] = true;
       dq.addLast(list.get(i));
       dfs(dq);
