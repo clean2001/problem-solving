@@ -1,16 +1,12 @@
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.PrimitiveIterator.OfInt;
 
 class Main {
-  static int N;
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-    N = Integer.parseInt(br.readLine());
-
+    int N = Integer.parseInt(br.readLine());
     while(N-- > 0) {
       Deque<Character> dq = new LinkedList<>();
       String s = br.readLine();
