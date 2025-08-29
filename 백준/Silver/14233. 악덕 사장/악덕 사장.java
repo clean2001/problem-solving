@@ -5,7 +5,6 @@ class Main {
     static int n;
     static int[] deadline;
     static boolean can(int time) {
-//        System.out.println(time);
         int total = 0;
         for(int i=0; i<n; ++i) {
             total += time;
