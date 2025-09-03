@@ -7,7 +7,7 @@ class Main {
     static int[] arr;
 
     static boolean can(int cur) {
-        int cnt = 1; // 0번째 집 설치
+        int cnt = 1;
         int prev = arr[0];
         int present = 0;
 
@@ -16,7 +16,7 @@ class Main {
 
             if(present-prev >= cur) {
                 prev = present;
-                cnt++; // 공유기 증가
+                cnt++;
             }
         }
         if(cnt >= C) return true;
@@ -39,12 +39,12 @@ class Main {
 
         Arrays.sort(arr);
 
-        int s = 1, e = 1000000000;
+        int s = 1, e = 1000000001;
         int mid = 0, ans = 0;
         while(s <= e) {
             mid = (s+e+1)/2;
 
-            if(can(mid)) { // 거리를 더 늘려도 됨
+            if(can(mid)) {
                 s = mid+1;
                 ans = Math.max(mid, ans);
             } else {
